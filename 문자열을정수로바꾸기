@@ -1,0 +1,19 @@
+class Solution {
+  public int solution(String s) {
+      int multi=1;
+        if(is(s.charAt(0))){
+            return Integer.parseInt(s);
+        }else {
+            if(s.charAt(0) == '-') {
+               multi = -1;
+            }
+            return multi * Integer.parseInt(s.substring(1,s.length()));
+        }
+        
+    }
+    static boolean is (char input) {
+        return input >= '0' && input <= '9';
+    }
+}
+
+
