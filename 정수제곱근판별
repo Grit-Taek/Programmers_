@@ -1,0 +1,9 @@
+class Solution {
+  public long solution(long n) {
+      double a = Math.sqrt(n);
+      int b = (int)a;
+      long answer = 0;
+      answer = (a == b)? (long)(Math.pow(b+1,2)) : -1;
+      return answer;
+  }
+}
