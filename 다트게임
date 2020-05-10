@@ -1,0 +1,47 @@
+class Solution {
+    public int solution(String dartResult) {
+        char [] arr = dartResult.toCharArray();
+        String res ="";
+        int answer = 0;
+        int [] score = new int[3];
+        int scoreIdx = 0;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(arr[i] >= 48 && arr[i] <= 57)
+                res += arr[i];
+            else {
+                if(arr[i] == 42) {
+                    if(scoreIdx == 1) score[scoreIdx-1] *= 2;
+                    else {
+                        score[scoreIdx-1] *= 2;
+                        score[scoreIdx-2] *= 2;
+                    }
+                }
+                else if(arr[i] == 35)
+                    score[scoreIdx-1] *= -1;
+                else {
+                    score[scoreIdx] = Integer.parseInt(res);
+                    switch(arr[i])
+                    {
+                        case 'S':
+                                    break;
+                        case 'D':
+                                    score[scoreIdx] = (int)Math.pow(score[scoreIdx],2); 
+                                    break;
+                        case 'T':
+                                    score[scoreIdx] = (int)Math.pow(score[scoreIdx],3);
+                                    break;
+                        default:
+                            break;
+                    }
+                    scoreIdx += 1;
+                    res ="";
+                }
+            }
+            
+        }
+        for(int i=0;i<3;i++)
+            answer += score[i];
+        return answer;
+    }
+}
