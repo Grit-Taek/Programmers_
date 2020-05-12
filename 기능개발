@@ -1,0 +1,36 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        ArrayList<Integer> arrList = new ArrayList<>();
+        int [] dayChk = new int[progresses.length];
+        for(int i=0;i<progresses.length;i++)
+        {
+            int day = 0;
+            for(int j = progresses[i];j< 100 ; j += speeds[i])
+            {
+                day++; 
+            }
+            dayChk[i] = day;
+        }
+        int cnt = 1;
+        for(int i=0;i<progresses.length;i++)
+        {
+
+            for(int j =i+1;j<progresses.length ; j++)
+            {
+                if(dayChk[i] < dayChk[j]) break;
+                else
+                    cnt++;
+            }
+            arrList.add(cnt);
+            i = i + cnt -1;
+            cnt = 1;
+        }
+        int [] answer = new int[arrList.size()];
+        for(int i=0;i<answer.length;i++)
+        {
+            answer[i] = arrList.get(i).intValue();
+        }
+        return answer;
+    }
+}
