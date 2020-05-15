@@ -1,0 +1,67 @@
+import java.util.*;
+
+class Solution {
+    public int solution(String numbers) {
+        int maxNum = makeMaxNum(numbers.toCharArray());
+        boolean [] primeNum = findPrimeNum(maxNum);
+        return findMakePossiblePrimeNum(primeNum,maxNum);
+        
+    }
+    
+    private int makeMaxNum(char [] inputNum)
+    {
+        Arrays.sort(inputNum);
+        int len = inputNum.length;
+        for(int i=0;i< len/2;i++) {
+            char temp = inputNum[i];
+            inputNum[i] = inputNum[len-1-i];
+            inputNum[len-1-i] = temp;
+        }
+        return Integer.parseInt(new String(inputNum));
+    }
+    
+    private boolean[] findPrimeNum(int maxNum) {
+        boolean[] visited = new boolean[maxNum+1];
+        for(int i=2;i<=Math.sqrt(maxNum);i++)
+        {
+            for(int j=2*i; j <= maxNum;j+=i)
+            {
+                if(!visited[j]) visited[j] = true;
+            }
+        }
+        return visited;
+    }
+    
+    private int findMakePossiblePrimeNum(boolean [] primeNum, int maxNum)
+    {
+        int possiblePrimeNumCount = 0;
+        for(int primeNumIdx = 2; primeNumIdx <= maxNum; primeNumIdx++)
+        {
+            if(!primeNum[primeNumIdx] && isPossible(maxNum,primeNumIdx)){
+                possiblePrimeNumCount++;
+            }
+        }
+        return possiblePrimeNumCount++;
+    }
+    private boolean isPossible(int maxNum, int primeNum) {
+        int[] numCount = countAvailableNums(maxNum);
+        while(primeNum != 0)
+        {
+            if(numCount[primeNum % 10] <= 0) return false;
+            numCount[primeNum % 10] --;
+            primeNum /= 10;
+        }
+        return true;        
+    }
+    
+    private int[] countAvailableNums(int maxNum) {
+        char[] str = Integer.toString(maxNum).toCharArray();
+        int [] numCount = new int[10];
+        for(int i=0;i<str.length;i++)
+        {
+            numCount[str[i] - '0']++;
+        }
+        return numCount;
+    }
+    
+}
