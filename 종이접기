@@ -1,0 +1,23 @@
+class Solution {
+    public int[] solution(int n) {
+        StringBuilder str = new StringBuilder(); 
+        str.append("0");
+        for(int i=2;i<=n;i++)
+        {
+            str.append("0");
+            int size = str.length();
+            for(int j = size-2;j>=0;j--)
+            {
+                if(str.charAt(j) == '0') str.append("1");
+                else str.append("0");
+            }
+        }
+        
+        int[] answer = new int[str.length()];
+        for(int i=0;i<answer.length;i++)
+            answer[i] = Character.getNumericValue(str.charAt(i));
+        
+        
+        return answer;
+    }
+}
