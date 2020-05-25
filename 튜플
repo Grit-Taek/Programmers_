@@ -1,0 +1,36 @@
+import java.util.*;
+class Solution {
+    public int[] solution(String s) {
+        int[] answer = {};
+        s = s.substring(2, s.length()-2);
+        s = s.replaceAll("\\}\\,\\{","#");
+        String[] arr = s.split("#");
+        Map<Integer, Object> map = new TreeMap<>();
+        for(int i=0;i<arr.length;i++)
+        {
+            String[] tuple = arr[i].split(",");
+            map.put(tuple.length , tuple);
+        }
+        Iterator mapItr = map.keySet().iterator();
+        Set<Integer> set = new LinkedHashSet<>();
+        while(mapItr.hasNext())
+        {
+            int key = (int)mapItr.next();
+            String []arrS = (String[])map.get(key);
+            for(String tuple : arrS)
+            {
+                set.add(Integer.valueOf(tuple));
+            }
+        }
+        answer = new int[set.size()];
+        Iterator setItr = set.iterator();
+        int idx = 0;
+        
+        while(setItr.hasNext())
+        {
+            answer[idx] = (int)setItr.next();
+            idx++;
+        }
+        return answer;
+    }
+}
