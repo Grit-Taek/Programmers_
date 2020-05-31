@@ -1,0 +1,18 @@
+class Solution {
+    
+    public int solution(int[] numbers, int target) {
+        return find(numbers, 0, 0, target);
+    }
+    
+    public int find(int []numbers , int length , int sum , int target )
+    {
+        if(length == numbers.length)
+        {
+            if(sum == target) return 1;
+            return 0;
+        }
+        
+        return find(numbers , length+1, sum + numbers[length] , target) + 
+            find(numbers , length+1, sum - numbers[length] , target);
+    }
+}
