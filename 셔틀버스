@@ -1,0 +1,69 @@
+import java.util.PriorityQueue;
+
+class Solution {
+    public static int startTime = 540; 
+    
+    class Time implements Comparable<Time>{
+        int h,m;
+        Time(String time)
+        {
+            this.h = Integer.parseInt(time.substring(0,2));
+            this.m = Integer.parseInt(time.substring(3,5));
+        }
+        void add(int n, int t)
+        {
+            int addHour = (n*t) / 60;
+            int addMin = (n*t) % 60;
+            h += addHour;
+            m += addMin;
+            
+            if(m >= 60)
+            {
+                h++;
+                m %= 60;
+            }
+            else if(m < 0 )
+            {
+                h--;
+                m += 60;
+            }
+        }
+        @Override
+        public String toString()
+        {
+            return String.format("%02d:%02d", this.h, this.m);
+        }
+        @Override
+        public int compareTo(Time o)
+        {
+            return this.h < o.h ? -1 : this.h > o.h ? 1 : this.m < o.m ? -1 : this.m > o.m ? 1 : 0;
+        }
+    }
+    public String solution(int n, int t, int m, String[] timetable) {
+        
+        PriorityQueue<Time> pq = new PriorityQueue<>();
+        for(String time : timetable) pq.add(new Time(time));
+        
+        Time conTime = new Time("00:00");
+        
+        for(int i=0;i<n;i++)
+        {
+            Time busTime = new Time("09:00");
+            busTime.add(i,t);
+            
+            conTime = busTime;
+            int capacity = m;
+            while(!pq.isEmpty() && capacity > 0 && pq.peek().compareTo(busTime) <= 0)
+            {
+                Time crewTime = pq.poll();
+                if(capacity == 1)
+                {
+                    conTime = crewTime;
+                    conTime.add(1,-1);
+                }
+                capacity--;
+            }
+        }
+        return conTime.toString();
+    }
+}
